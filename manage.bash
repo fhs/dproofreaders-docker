@@ -3,8 +3,7 @@
 set -e
 
 NET=dproofreaders
-PHPBB_VER=3.0.14
-DP_VER=R201701
+VERSION=R201701
 DP_IMAGE=fshahriar/dproofreaders
 
 containerstatus(){
@@ -39,21 +38,6 @@ showurl(){
 	echo http://${IP}/
 }
 
-downloadsrc(){
-	(
-		cd app/src
-		if [ ! -e "phpBB-${PHPBB_VER}.tar.bz2" ]
-		then
-			curl -L -O "https://www.phpbb.com/files/release/phpBB-${PHPBB_VER}.tar.bz2"
-		fi
-		if [ ! -e "dproofreaders.${DP_VER}.tgz" ]
-		then
-			curl -L -O "https://downloads.sourceforge.net/project/dproofreaders/dproofreaders/${DP_VER}/dproofreaders.${DP_VER}.tgz"
-		fi
-	)
-}
-
-
 case "$1" in
 url)
 	showurl
@@ -63,8 +47,7 @@ kill)
 	docker rm pgdp-sql pgdp-web
 	;;
 build)
-	downloadsrc
-	docker build --network=pgdp -t ${DP_IMAGE}:${DP_VER} -t ${DP_IMAGE}:latest .
+	docker build -t ${DP_IMAGE}:${VERSION} -t ${DP_IMAGE}:latest .
 	;;
 run)
 	runimg pgdp-sql -e 'MYSQL_ROOT_PASSWORD=dp_password' mysql:5.7
