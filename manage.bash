@@ -3,6 +3,9 @@
 set -e
 
 NET=dproofreaders
+PHPBB_VER=3.0.14
+DP_VER=R201701
+DP_IMAGE=fshahriar/dproofreaders
 
 containerstatus(){
 	docker inspect -f '{{.State.Status}}' "$1" 2>/dev/null
@@ -37,8 +40,6 @@ showurl(){
 }
 
 downloadsrc(){
-	PHPBB_VER=3.0.14
-	DP_VER=R201701
 	(
 		cd app/src
 		if [ ! -e "phpBB-${PHPBB_VER}.tar.bz2" ]
@@ -63,12 +64,12 @@ kill)
 	;;
 build)
 	downloadsrc
-	docker build --network=pgdp -t pgdp-web .
+	docker build --network=pgdp -t ${DP_IMAGE}:${DP_VER} -t ${DP_IMAGE}:latest .
 	;;
 run)
 	runimg pgdp-sql -e 'MYSQL_ROOT_PASSWORD=dp_password' mysql:5.7
 	sleep 10 # wait for mysql to start up
-	runimg pgdp-web pgdp-web
+	runimg pgdp-web $DP_IMAGE
 	showurl
 	;;
 *)
