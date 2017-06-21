@@ -160,11 +160,11 @@ _FORUMS_URL=$base_url/phpBB3
 
 # Something like 'Distributed Proofreaders' would be good. It should
 # make sense in contexts like 'Welcome to %s', and 'the %s website'.
-_SITE_NAME=PICK_A_NAME
+_SITE_NAME="Distributed Proofreaders"
 
 # Something like 'DP' would be good. It will be used in the HTML title
 # of each page ('%s: Welcome') and in the subject line of emails.
-_SITE_ABBREVIATION=PICK_AN_ABBREVIATION
+_SITE_ABBREVIATION=DP
 
 # Something like 'Thank you!\nThe Management' would be good. It will be
 # used in the footer of emails from the site. (Does not affect phpBB
