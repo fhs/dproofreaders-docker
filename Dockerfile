@@ -20,8 +20,12 @@ RUN mkdir -p /var/www/html/ && \
 
 RUN /var/www/html/c/SETUP/configure /app/config/dproofreads_config.sh /var/www/html
 
+RUN cd /var/www/html/ && \
+	tar xjf  /app/src/phpBB-3.0.14.tar.bz2
+
 # TODO: chmod
 RUN cd /var/www/html && \
+	cp /app/lib/index.html /var/www/html/index.html && \
 	mkdir -p \
 		/tmp/sp_check \
 		projects \
@@ -30,14 +34,11 @@ RUN cd /var/www/html && \
 		d/teams/avatar \
 		d/teams/icon \
 		d/pg \
-		d/xmlfeeds && \
-	chown -R www-data:www-data /tmp/sp_check projects d
-
-RUN cd /var/www/html/ && \
-	tar xjf  /app/src/phpBB-3.0.14.tar.bz2
+		d/xmlfeeds \
+		/home/dpscans && \
+	chown -R www-data:www-data /tmp/sp_check projects d /home/dpscans
 
 RUN cp /app/config/php.ini /usr/local/etc/php/
 
-RUN mkdir /home/dpscans && chown www-data:www-data /home/dpscans
 
 CMD ["/app/bin/runapache.bash"]

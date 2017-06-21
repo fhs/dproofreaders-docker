@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 DOCROOT=/var/www/html
 SETUPDIR=${DOCROOT}/c/SETUP
 
@@ -43,5 +45,7 @@ then
 	mkdir -p /app/phpBB3
 	mv $DOCROOT/phpBB3/install /app/phpBB3
 fi
+
+/app/bin/create-admin.bash > /dev/null
 
 wait # apache2-foreground
