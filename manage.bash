@@ -22,7 +22,7 @@ runimg(){
 		echo docker start $name	'#' currently stopped
 		;;
 	*)
-		docker run -d --restart=always --network=$NET \
+		docker run -d --network=$NET \
 			--name=${name} --hostname=${name} "$@"
 		;;
 	esac
@@ -51,7 +51,6 @@ build)
 	;;
 run)
 	runimg pgdp-sql -e 'MYSQL_ROOT_PASSWORD=dp_password' mysql:5.7
-	sleep 10 # wait for mysql to start up
 	runimg pgdp-web $DP_IMAGE
 	showurl
 	;;

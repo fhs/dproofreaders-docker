@@ -9,6 +9,12 @@ sql(){
 	mysql -h pgdp-sql --password=dp_password
 }
 
+echo waiting for mysql server...
+while ! mysqladmin ping -h pgdp-sql --password=dp_password --silent; do
+	sleep 1
+done
+echo got ping back from mysql
+
 # initialize database
 cd $SETUPDIR
 php -f install_db.php
