@@ -64,7 +64,14 @@ run)
 	showurl
 	;;
 *)
-	echo usage: $0 '<url|kill|build|run>'
+	echo usage: $0 '<cmd> [args...]'
+	echo
+	echo "    build      Build web container using docker."
+	echo "    kill       Kill mysql and web containers."
+	echo "    run [dir]  Run mysql and web containers."
+	echo "               DProofeaders source is replaced with dir"
+	echo "               (bound to /var/www/html/c)."
+	echo "    url        Print web server URL."
 	exit 2
 	;;
 esac
