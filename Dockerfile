@@ -15,7 +15,7 @@ RUN apt-get update && \
 	
 # mysql is for dproofreaders
 # mysqli is for phpBB3 (note: things break if mysql is used instead of mysqli)
-RUN docker-php-ext-install mysql mysqli gd && \
+RUN docker-php-ext-install mysql mysqli gd gettext && \
 	pecl install yaz-1.2.1
 
 COPY app /app
@@ -23,8 +23,6 @@ RUN mkdir -p /var/www/html/ && \
 	cd /var/www/html/ && \
 	tar xzf /src/dproofreaders.R201701.tgz && \
 	tar xjf /src/phpBB-3.0.14.tar.bz2
-
-RUN /var/www/html/c/SETUP/configure /app/config/dproofreads_config.sh /var/www/html
 
 # TODO: chmod
 RUN cd /var/www/html && \

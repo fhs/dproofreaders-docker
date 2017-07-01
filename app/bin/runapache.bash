@@ -15,11 +15,11 @@ while ! mysqladmin ping -h pgdp-sql --password=dp_password --silent; do
 done
 echo got ping back from mysql
 
-# initialize database
+# configure PD & initialize database
+# Note: remove SETUP directory in production
 cd $SETUPDIR
+./configure /app/config/dproofreads_config.sh $DOCROOT
 php -f install_db.php
-mkdir -p /app/c
-mv $SETUPDIR /app/c
 
 echo 'CREATE DATABASE IF NOT EXISTS phpbb;' | sql
 
@@ -52,6 +52,8 @@ then
 	mv $DOCROOT/phpBB3/install /app/phpBB3
 fi
 
-/app/bin/create-admin.bash > /dev/null
+if ! /app/bin/create-admin.bash > /dev/null; then
+	echo creating admin user failed
+fi
 
 wait # apache2-foreground

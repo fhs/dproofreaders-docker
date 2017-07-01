@@ -50,8 +50,17 @@ build)
 	docker build -t ${DP_IMAGE}:${VERSION} -t ${DP_IMAGE}:latest .
 	;;
 run)
+	shift
+	volarg=
+	if [ $# -gt 0 ]; then
+		if [ ! -d "$1" ]; then
+			echo $1 is not a directory
+			exit 2
+		fi
+		volarg="-v $1:/var/www/html/c"
+	fi
 	runimg pgdp-sql -e 'MYSQL_ROOT_PASSWORD=dp_password' mysql:5.7
-	runimg pgdp-web $DP_IMAGE
+	runimg pgdp-web $volarg $DP_IMAGE
 	showurl
 	;;
 *)

@@ -350,7 +350,8 @@ _DB_REQUESTS_EMAIL_ADDR=db-requests@example.org
 _PPV_REPORTING_EMAIL_ADDR=ppv-reports@example.org
 _PROMOTION_REQUESTS_EMAIL_ADDR=dp-promote@example.org
 _IMAGE_SOURCES_EMAIL_ADDR=ism@example.org
-# These addresses are used in various places for users to request help
+_TRANSLATION_COORDINATOR_EMAIL_ADDR=translation-coord@example.org
+# These addresses are used in various places for users to request help.
 # These can be set to any working email address.
 
 _BLOG_URL=
@@ -410,6 +411,10 @@ _JPGRAPH_FONT_STYLE=9002    # FS_BOLD
 _USE_PHP_SESSIONS=TRUE
 # If set to TRUE, PHP sessions are used to track user preferences, etc;
 # if FALSE, the original DP cookie system is used.
+
+_USE_SECURE_COOKIES=FALSE
+# If set to TRUE, browsers are instructed to only send the cookie over secure
+# connections. Your _CODE_URL *must* be using https:// for this to work!
 
 _COOKIE_ENCRYPTION_KEY=A_LONG_STRING_OF_GIBBERISH
 # You only need to define this if $_USE_PHP_SESSIONS is FALSE.
@@ -523,7 +528,7 @@ if [ "$_URL_DUMP_PROGRAM" == "" ]; then
     # No program explicitly specified, attempt to find: wget, curl, lynx
     program_test=`which wget`
     if [ $? -eq 0 ]; then
-        _URL_DUMP_PROGRAM="$program_test --quiet -O-"
+        _URL_DUMP_PROGRAM="$program_test --quiet --tries=1 --timeout=0 -O-"
     else
         program_test=`which curl`
         if [ $? -eq 0 ]; then
