@@ -9,9 +9,9 @@ RUN mkdir -p /src && \
 # libyaz4-dev for php yaz extension
 # unzip is for c/tools/project_manager/add_files.php
 # aspell is for WordCheck
-# mysql-client, vim-tiny, less are just for debugging
+# vim-tiny, less are just for debugging
 RUN apt-get update && \
-	apt-get install -y libpng12-dev libyaz4-dev unzip aspell mysql-client vim-tiny less
+	apt-get install -y libpng12-dev libyaz4-dev unzip aspell mariadb-client vim-tiny less
 	
 # mysql is for dproofreaders
 # mysqli is for phpBB3 (note: things break if mysql is used instead of mysqli)

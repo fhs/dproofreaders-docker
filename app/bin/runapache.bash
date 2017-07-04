@@ -15,24 +15,22 @@ while ! mysqladmin ping -h pgdp-sql --password=dp_password --silent; do
 done
 echo got ping back from mysql
 
+# for dp_db.users.postprocessor, and other tinytext fields
+# e.g. "Field 'postprocessor' doesn't have a default value" in accounts/activate.php
+echo "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'STRICT_TRANS_TABLES',''));" | sql
+
 # configure PD & initialize database
 # Note: remove SETUP directory in production
 cd $SETUPDIR
 ./configure /app/config/dproofreads_config.sh $DOCROOT
 php -f install_db.php
 
-echo 'CREATE DATABASE IF NOT EXISTS phpbb;' | sql
-
-# for dp_db.users.postprocessor, and other tinytext fields
-echo "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'STRICT_TRANS_TABLES',''));" | sql
-
-
 cd $DOCROOT
 apache2-foreground &
 
-
 # Set up phpBB
 sleep 3	# wait for apache to start up
+echo 'CREATE DATABASE IF NOT EXISTS phpbb;' | sql
 if echo 'select 1 from phpbb.phpbb_config;' | sql
 then
 	echo phpBB already set up

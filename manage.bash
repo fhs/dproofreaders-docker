@@ -33,9 +33,12 @@ then
 	docker network create $NET
 fi
 
+containerip(){
+	docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $1
+}
+
 showurl(){
-	IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pgdp-web)
-	echo http://${IP}/
+	echo http://$(containerip pgdp-web)/
 }
 
 case "$1" in
@@ -59,9 +62,12 @@ run)
 		fi
 		volarg="-v $1:/var/www/html/c"
 	fi
-	runimg pgdp-sql -e 'MYSQL_ROOT_PASSWORD=dp_password' mysql:5.7
+	runimg pgdp-sql -e 'MYSQL_ROOT_PASSWORD=dp_password' mariadb:10.2
 	runimg pgdp-web $volarg $DP_IMAGE
 	showurl
+	;;
+sql)
+	mysql -h $(containerip pgdp-sql) -u root --password=dp_password
 	;;
 *)
 	echo usage: $0 '<cmd> [args...]'
@@ -71,6 +77,7 @@ run)
 	echo "    run [dir]  Run mysql and web containers."
 	echo "               DProofeaders source is replaced with dir"
 	echo "               (bound to /var/www/html/c)."
+	echo "    sql        Start mysql client."
 	echo "    url        Print web server URL."
 	exit 2
 	;;
