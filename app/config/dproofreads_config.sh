@@ -35,7 +35,7 @@
 # See SETUP/installation.txt for instructions on how to create the database
 # and user.
 
-_DB_SERVER=pgdp-sql
+_DB_SERVER=dp-sql
 _DB_USER=root
 _DB_PASSWORD=dp_password
 _DB_NAME=dp_db

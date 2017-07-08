@@ -6,7 +6,7 @@ SERVER=localhost
 USERNAME=admin
 
 sql(){
-	mysql -h pgdp-sql --password=dp_password
+	mysql -h dp-sql --password=dp_password
 }
 
 curl "http://${SERVER}/c/accounts/addproofer.php" \

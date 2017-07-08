@@ -38,7 +38,7 @@ containerip(){
 }
 
 showurl(){
-	echo http://$(containerip pgdp-web)/
+	echo http://$(containerip dp-web)/
 }
 
 case "$1" in
@@ -46,8 +46,8 @@ url)
 	showurl
 	;;
 kill)
-	docker stop pgdp-sql pgdp-web
-	docker rm pgdp-sql pgdp-web
+	docker stop dp-sql dp-web
+	docker rm dp-sql dp-web
 	;;
 build)
 	docker build -t ${DP_IMAGE}:${VERSION} -t ${DP_IMAGE}:latest .
@@ -62,12 +62,12 @@ run)
 		fi
 		volarg="-v $1:/var/www/html/c"
 	fi
-	runimg pgdp-sql -e 'MYSQL_ROOT_PASSWORD=dp_password' mariadb:10.2
-	runimg pgdp-web $volarg $DP_IMAGE
+	runimg dp-sql -e 'MYSQL_ROOT_PASSWORD=dp_password' mariadb:10.2
+	runimg dp-web $volarg $DP_IMAGE
 	showurl
 	;;
 sql)
-	mysql -h $(containerip pgdp-sql) -u root --password=dp_password
+	mysql -h $(containerip dp-sql) -u root --password=dp_password
 	;;
 *)
 	echo usage: $0 '<cmd> [args...]'

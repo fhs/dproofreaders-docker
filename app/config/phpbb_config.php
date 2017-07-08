@@ -2,7 +2,7 @@
 // phpBB 3.0.x auto-generated configuration file
 // Do not change anything in this file!
 $dbms = 'mysqli';
-$dbhost = 'pgdp-sql';
+$dbhost = 'dp-sql';
 $dbport = '';
 $dbname = 'phpbb';
 $dbuser = 'root';

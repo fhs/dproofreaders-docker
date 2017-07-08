@@ -4,7 +4,7 @@ SERVER=localhost
 
 DBPARAMS=(
 	--data-urlencode "dbms=mysqli" \
-	--data-urlencode "dbhost=pgdp-sql" \
+	--data-urlencode "dbhost=dp-sql" \
 	--data-urlencode "dbport=" \
 	--data-urlencode "dbname=phpbb" \
 	--data-urlencode "dbuser=root" \

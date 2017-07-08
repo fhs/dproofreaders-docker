@@ -10,9 +10,9 @@ Run as following:
 which does the same thing as:
 ```
 docker network create dproofreaders
-docker run -d --network=dproofreaders --name=pgdp-sql -e 'MYSQL_ROOT_PASSWORD=dp_password' mariadb:10.2
-docker run -d --network=dproofreaders --name=pgdp-web fshahriar/dproofreaders
-docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' pgdp-web  # server-ip
+docker run -d --network=dproofreaders --name=dp-sql -e 'MYSQL_ROOT_PASSWORD=dp_password' mariadb:10.2
+docker run -d --network=dproofreaders --name=dp-web fshahriar/dproofreaders
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' dp-web  # server-ip
 ```
 
 Visit the site at `http://<server-ip>/`.
